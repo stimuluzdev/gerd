@@ -1,6 +1,6 @@
 import { command, renameFolder } from "@utils/index.ts";
 
-export const generateScaffold = async (args: {
+export const scaffold = async (args: {
   // deno-lint-ignore no-explicit-any
   [x: string]: any;
   _: Array<string | number>;
