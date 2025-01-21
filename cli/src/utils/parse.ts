@@ -1,13 +1,9 @@
 import { Args, fig, parse } from "@deps";
+import { alias, commands } from "@utils/commands.ts";
 
 export function parseArguments(args: string[]): Args {
-  const booleanArgs = ["help", "secret"];
-  const stringArgs = ["length"];
-
-  const alias = {
-    help: "h",
-    length: "l",
-  };
+  const booleanArgs = ["help"];
+  const stringArgs = ["length", ...commands.map((c) => (c.name))];
 
   return parse(args, {
     alias,
@@ -47,7 +43,7 @@ export async function printHelp() {
 export async function printHello() {
   const word = await fig("GERD!");
   console.log(`
-    Welcome to
-    ${word}
+    \nWelcome to
+    \n${word}
   `);
 }

@@ -6,6 +6,8 @@ async function main(inputArgs: string[]) {
   const args = parseArguments(inputArgs);
   const cmds = args._;
 
+  console.log({ args, cmds });
+
   if (args.help) {
     await printHelp();
   }
