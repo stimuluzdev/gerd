@@ -4,11 +4,12 @@ import { generateSecret, runCreate } from "@src/common/index.ts";
 
 async function main(inputArgs: string[]) {
   const args = parseArguments(inputArgs);
+  const cmds = args._;
+
   if (args.help) {
     await printHelp();
   }
 
-  const cmds = args._;
   const create = checkCmd(cmds, "create");
   if (create) {
     await runCreate(args);
