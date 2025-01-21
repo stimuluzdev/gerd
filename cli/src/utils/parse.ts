@@ -3,7 +3,7 @@ import { commands } from "@utils/commands.ts";
 import { helpMessage } from "@utils/common/help.ts";
 
 export function parseArguments(args: string[]): Args {
-  const boolArgs = commands.filter((c) => c.alias === true );
+  const boolArgs = commands.filter((c) => c.alias === true);
   const strArgs = commands.filter((c) => !c.alias).map((c) => (c.name));
 
   const booleanArgs = [
