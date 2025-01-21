@@ -1,5 +1,5 @@
 import { generateSecret, runCreate } from "@utils/common/index.ts";
-import { scaffold } from "@src/languages/typescript/hono/call/index.ts";
+import { getAllFrameworksWithLang, getSubCommands } from "@utils/index.ts";
 
 export type ArgsType = {
   // deno-lint-ignore no-explicit-any
@@ -29,12 +29,8 @@ export const commands: Command[] = [
   { name: "secret", call: generateSecret },
 ];
 
-export const frameworks: FrameworkCommand[] = [
-  {
-    framework: "hono",
-    subCommands: [{
-      name: "create",
-      call: scaffold,
-    }],
-  },
-];
+const allFrameworks = await getAllFrameworksWithLang();
+const subCommands = await getSubCommands(allFrameworks);
+export const frameworks: FrameworkCommand[] = subCommands.map((f) => {
+  return ({ framework: f.framework, subCommands: f.subCommands });
+});

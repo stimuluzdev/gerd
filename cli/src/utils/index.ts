@@ -1,6 +1,7 @@
 import { Path, readline } from "@deps";
 import type { ArgsType, Command } from "@utils/commands.ts";
 
+export type FrameworkWithLang = { lang: string; framework: string };
 export const command = async (cmd: string, args: string[]) => {
   const td = new TextDecoder();
   const { success, stdout } = await new Deno.Command(cmd, {
@@ -108,6 +109,16 @@ export const getAllFrameworks = async () => {
   return frameworks;
 };
 
+export const getAllFrameworksWithLang = async () => {
+  const frameworks: FrameworkWithLang[] = [];
+  const languages = await getSubfolders("./src/languages");
+  for (const lang of languages) {
+    const names = await getSubfolders(`./src/languages/${lang}`);
+    frameworks.push(...names.map((n) => ({ lang, framework: n })));
+  }
+  return frameworks;
+};
+
 export const registerCommands = async (commands: Command[], args: ArgsType) => {
   for (const { name, call } of commands) {
     const cmd = checkCmd(args, name);
@@ -115,4 +126,17 @@ export const registerCommands = async (commands: Command[], args: ArgsType) => {
       await call(args, name);
     }
   }
+};
+
+export const getSubCommands = async (frameworks: FrameworkWithLang[]) => {
+  const subCommands: { framework: string; subCommands: Command[] }[] = [];
+  for (const f of frameworks) {
+    const SubCommands = await import(
+      `@src/languages/${f.lang}/${f.framework}/index.ts`
+    ).then(
+      (m) => m.SubCalls,
+    ) as Command[];
+    subCommands.push({ framework: f.framework, subCommands: SubCommands });
+  }
+  return subCommands;
 };
