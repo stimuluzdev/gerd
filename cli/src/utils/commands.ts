@@ -1,9 +1,15 @@
 import { generateSecret, runCreate } from "@utils/common/index.ts";
 
+export type ArgsType = {
+  // deno-lint-ignore no-explicit-any
+  [x: string]: any;
+  _: Array<string | number>;
+};
+export type FunctionType = (args: ArgsType, cmd: string) => Promise<void>;
+
 interface Command {
   name: string;
-  //deno-lint-ignore ban-types
-  call: Function;
+  call: FunctionType;
   alias?: boolean;
   aliasValue?: string;
 }

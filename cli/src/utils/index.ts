@@ -1,4 +1,5 @@
 import { Path, readline } from "@deps";
+import { type ArgsType } from "@utils/commands.ts";
 
 export const command = async (cmd: string, args: string[]) => {
   const td = new TextDecoder();
@@ -11,11 +12,7 @@ export const command = async (cmd: string, args: string[]) => {
   return "";
 };
 
-export const checkCmd = (args: {
-  // deno-lint-ignore no-explicit-any
-  [x: string]: any;
-  _: Array<string | number>;
-}, cmd: string) => {
+export const checkCmd = (args: ArgsType, cmd: string) => {
   const find = args._.find((c) => c === cmd);
   const alias = Object.keys(args).find((k) => k === cmd);
   if (alias !== undefined) {
@@ -27,15 +24,11 @@ export const checkCmd = (args: {
   return find !== undefined;
 };
 
-export const getCommandValue = (args: {
-  // deno-lint-ignore no-explicit-any
-  [x: string]: any;
-  _: Array<string | number>;
-}, cmd: string) => {
+export const getCommandValue = (args: ArgsType, cmd: string) => {
   const alias = Object.keys(args).find((k) => k === cmd);
   if (alias !== undefined) {
     const val = args[alias];
-    if (typeof val === "boolean") return args._;
+    if (typeof val === "boolean") return args._.filter(c => c !== cmd.toLowerCase());
     return [val];
   }
   return [];

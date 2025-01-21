@@ -5,6 +5,7 @@ import {
   getSubfolders,
 } from "@utils/index.ts";
 import { Prompt } from "@deps";
+import { type FunctionType } from "@utils/commands.ts";
 
 export const generateSecret = async (args: {
   // deno-lint-ignore no-explicit-any
@@ -69,6 +70,6 @@ export const runCreate = async (args: {
     `@src/languages/${language}/${framework}/index.ts`
   ).then(
     (m) => m.Call,
-  );
-  await Call.scaffold(args);
+  ) as { create: FunctionType };
+  await Call.create(args, cmd);
 };
