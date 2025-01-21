@@ -10,11 +10,11 @@ async function main(inputArgs: string[]) {
     await printHelp();
   }
 
-  for(const {name, call} of commands) {
-      const cmd = checkCmd(cmds, name);
-      if (cmd) {
-        await call(args);
-      }
+  for (const { name, call } of commands) {
+    const cmd = checkCmd(cmds, name);
+    if (cmd) {
+      await call(args);
+    }
   }
 
   await printHello();
