@@ -27,6 +27,20 @@ export const checkCmd = (args: {
   return find !== undefined;
 };
 
+export const getCommandValue = (args: {
+  // deno-lint-ignore no-explicit-any
+  [x: string]: any;
+  _: Array<string | number>;
+}, cmd: string) => {
+  const alias = Object.keys(args).find((k) => k === cmd);
+  if (alias !== undefined) {
+    const val = args[alias];
+    if (typeof val === "boolean") return args._;
+    return [val];
+  }
+  return [];
+};
+
 export const renameFolder = async (
   name: string,
   info: { old: string; newPath: string },

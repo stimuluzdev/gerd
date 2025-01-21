@@ -12,7 +12,7 @@ async function main(inputArgs: string[]) {
   for (const { name, call } of commands) {
     const cmd = checkCmd(args, name);
     if (cmd) {
-      await call(args);
+      await call(args, name);
     }
   }
 
