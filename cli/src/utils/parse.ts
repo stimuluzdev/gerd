@@ -1,7 +1,7 @@
 import { Args, fig, parse } from "@deps";
 import { commands } from "@utils/commands.ts";
 import { helpMessage } from "@utils/common/help.ts";
-import { getAllFrameworks } from "@utils/index.ts";
+import { getAliasValue, getAllFrameworks } from "@utils/index.ts";
 
 export async function parseArguments(args: string[]): Promise<Args> {
   const frameworks = await getAllFrameworks();
@@ -25,7 +25,7 @@ export async function parseArguments(args: string[]): Promise<Args> {
     if (arg.aliasValue && arg.aliasValue.length > 1) {
       throw new Error("aliasValue should be a single char");
     }
-    alias[arg.name] = arg.aliasValue || arg.name.charAt(0).toLowerCase();
+    alias[arg.name] = getAliasValue(arg);
   }
 
   return parse(args, {

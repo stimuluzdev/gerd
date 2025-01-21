@@ -11,6 +11,7 @@ export type FunctionType = (args: ArgsType, cmd: string) => Promise<void>;
 export interface Command {
   name: string;
   call: FunctionType;
+  desc?: string;
   alias?: boolean;
   aliasValue?: string;
 }
@@ -25,8 +26,8 @@ interface FrameworkCommand {
 */
 
 export const commands: Command[] = [
-  { name: "create", call: runCreate, alias: true },
-  { name: "secret", call: generateSecret },
+  { name: "create", call: runCreate, alias: true, desc: "Generate new project scaffold" },
+  { name: "secret", call: generateSecret, desc: "Generate random secret keys" },
 ];
 
 const allFrameworks = await getAllFrameworksWithLang();

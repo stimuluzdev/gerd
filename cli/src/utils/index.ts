@@ -140,3 +140,5 @@ export const getSubCommands = async (frameworks: FrameworkWithLang[]) => {
   }
   return subCommands;
 };
+
+export const getAliasValue = (alias: Command) => alias.aliasValue || alias.name.charAt(0).toLowerCase()

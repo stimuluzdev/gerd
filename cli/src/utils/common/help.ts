@@ -1,19 +1,25 @@
+import { commands } from "@utils/commands.ts";
+import { getAliasValue } from "@utils/index.ts";
+
+const alias = commands.filter((c) => c.alias === true);
+
 export const helpMessage = `
     \nUsage: Below are available commands
     \n
-    ---------------------------------------------------------
-      create          <=>    Generate new project scaffold
-    ---------------------------------------------------------
-      secret          <=>    Generate random secret token
-    ---------------------------------------------------------
+    ${commands.map((c, i) => `
+    ${i === 0 ? "---------------------------------------------------------": ""}
+      ${c.name} <=>    ${c.desc || ""}
+    ---------------------------------------------------------`).join("").trim()}
 
 
     \nOptional flags:
     ---------------------------------------------------------
-      -h, --help         <=>    Display help and exit
+    -h, --help    <=>  Display help and exit
     ---------------------------------------------------------
-      -l, --length       <=>    State secret length
+    -l, --length  <=>  State secret length
     ---------------------------------------------------------
-      -c, --create       <=>    Alias to create
-    ---------------------------------------------------------
+    ${alias.map(a => `
+      -${getAliasValue(a)}, --create  <=>  Alias to ${a.name}
+    ---------------------------------------------------------`).join("").trim()}
+
   `.trim();
