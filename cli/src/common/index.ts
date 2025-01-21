@@ -20,31 +20,29 @@ export const runCreate = async (args: {
   [x: string]: any;
   _: Array<string | number>;
 }) => {
-    const languages = await getSubfolders("./src/languages");
-    const language = await Prompt.Select.prompt({
-      message:
-        "Select language (use 'space' to select and 'Enter' to confirm):",
-      options: languages.map((lang) => ({
-        name: capFirstChar(lang),
-        value: lang,
-      })),
-      search: true,
-    });
+  const languages = await getSubfolders("./src/languages");
+  const language = await Prompt.Select.prompt({
+    message: "Select language (use 'space' to select and 'Enter' to confirm):",
+    options: languages.map((lang) => ({
+      name: capFirstChar(lang),
+      value: lang,
+    })),
+    search: true,
+  });
 
-    const frameworks = await getSubfolders(`./src/languages/${language}`);
-    const framework = await Prompt.Select.prompt({
-      message:
-        "Select framework (use 'space' to select and 'Enter' to confirm):",
-      options: frameworks.map((name) => ({
-        name: capFirstChar(name),
-        value: name,
-      })),
-      search: true,
-    });
-    const Call = await import(
-      `@src/languages/${language}/${framework}/index.ts`
-    ).then(
-      (m) => m.Call,
-    );
-    await Call.generateScaffold(args);
+  const frameworks = await getSubfolders(`./src/languages/${language}`);
+  const framework = await Prompt.Select.prompt({
+    message: "Select framework (use 'space' to select and 'Enter' to confirm):",
+    options: frameworks.map((name) => ({
+      name: capFirstChar(name),
+      value: name,
+    })),
+    search: true,
+  });
+  const Call = await import(
+    `@src/languages/${language}/${framework}/index.ts`
+  ).then(
+    (m) => m.Call,
+  );
+  await Call.generateScaffold(args);
 };

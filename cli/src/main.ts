@@ -14,10 +14,10 @@ async function main(inputArgs: string[]) {
     await runCreate(args);
   }
 
-    const secret = checkCmd(cmds, "secret");
-    if (secret) {
-      await generateSecret(args);
-    }
+  const secret = checkCmd(cmds, "secret");
+  if (secret) {
+    await generateSecret(args);
+  }
 
   await printHello();
 }

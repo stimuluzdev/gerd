@@ -1,6 +1,7 @@
 # GERD!
 
 ## Documentation
+
 This is a docs application generated with
 [Fumadocs](https://github.com/fuma-nama/fumadocs)
 

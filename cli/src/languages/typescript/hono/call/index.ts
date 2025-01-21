@@ -5,7 +5,8 @@ export const generateScaffold = async (args: {
   [x: string]: any;
   _: Array<string | number>;
 }) => {
-  const name = args["name"] || args["n"] || prompt("Enter project name: \n> ") as string;
+  const name = args["name"] || args["n"] ||
+    prompt("Enter project name: \n> ") as string;
   const opts = { old: "./hono-scafold", newPath: `./${name}` };
 
   await command("git", [
