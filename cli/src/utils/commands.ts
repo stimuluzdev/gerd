@@ -1,4 +1,5 @@
 import { generateSecret, runCreate } from "@utils/common/index.ts";
+import { scaffold } from "@src/languages/typescript/hono/call/index.ts";
 
 export type ArgsType = {
   // deno-lint-ignore no-explicit-any
@@ -7,11 +8,16 @@ export type ArgsType = {
 };
 export type FunctionType = (args: ArgsType, cmd: string) => Promise<void>;
 
-interface Command {
+export interface Command {
   name: string;
   call: FunctionType;
   alias?: boolean;
   aliasValue?: string;
+}
+
+interface FrameworkCommand {
+  framework: string;
+  subCommands: Command[];
 }
 
 /* NB:
@@ -21,4 +27,14 @@ interface Command {
 export const commands: Command[] = [
   { name: "create", call: runCreate, alias: true },
   { name: "secret", call: generateSecret },
+];
+
+export const frameworks: FrameworkCommand[] = [
+  {
+    framework: "hono",
+    subCommands: [{
+      name: "create",
+      call: scaffold,
+    }],
+  },
 ];

@@ -1,8 +1,10 @@
 import { Args, fig, parse } from "@deps";
 import { commands } from "@utils/commands.ts";
 import { helpMessage } from "@utils/common/help.ts";
+import { getAllFrameworks } from "@utils/index.ts";
 
-export function parseArguments(args: string[]): Args {
+export async function parseArguments(args: string[]): Promise<Args> {
+  const frameworks = await getAllFrameworks();
   const boolArgs = commands.filter((c) => c.alias === true);
   const strArgs = commands.filter((c) => !c.alias).map((c) => (c.name));
 
@@ -12,7 +14,7 @@ export function parseArguments(args: string[]): Args {
       c,
     ) => (c.name)),
   ];
-  const stringArgs = ["length", ...strArgs];
+  const stringArgs = ["length", ...strArgs, ...frameworks];
   // deno-lint-ignore no-explicit-any
   const alias: any = {
     help: "h",

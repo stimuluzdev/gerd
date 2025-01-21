@@ -1,5 +1,5 @@
 import { Path, readline } from "@deps";
-import { type ArgsType } from "@utils/commands.ts";
+import type { ArgsType, Command } from "@utils/commands.ts";
 
 export const command = async (cmd: string, args: string[]) => {
   const td = new TextDecoder();
@@ -13,7 +13,7 @@ export const command = async (cmd: string, args: string[]) => {
 };
 
 export const checkCmd = (args: ArgsType, cmd: string) => {
-  const find = args._.find((c) => c === cmd);
+  const find = args._?.find((c) => c === cmd);
   const alias = Object.keys(args).find((k) => k === cmd);
   if (alias !== undefined) {
     const val = args[alias];
@@ -28,7 +28,9 @@ export const getCommandValue = (args: ArgsType, cmd: string) => {
   const alias = Object.keys(args).find((k) => k === cmd);
   if (alias !== undefined) {
     const val = args[alias];
-    if (typeof val === "boolean") return args._.filter(c => c !== cmd.toLowerCase());
+    if (typeof val === "boolean") {
+      return args._.filter((c) => c !== cmd.toLowerCase());
+    }
     return [val];
   }
   return [];
@@ -95,3 +97,22 @@ export async function getSubfolders(folderPath: string): Promise<string[]> {
   }
   return subfolders;
 }
+
+export const getAllFrameworks = async () => {
+  const frameworks: string[] = [];
+  const languages = await getSubfolders("./src/languages");
+  for (const lang of languages) {
+    const names = await getSubfolders(`./src/languages/${lang}`);
+    frameworks.push(...names);
+  }
+  return frameworks;
+};
+
+export const registerCommands = async (commands: Command[], args: ArgsType) => {
+  for (const { name, call } of commands) {
+    const cmd = checkCmd(args, name);
+    if (cmd) {
+      await call(args, name);
+    }
+  }
+};
