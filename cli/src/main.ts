@@ -1,6 +1,6 @@
 import { parseArguments, printHello, printHelp } from "@utils/parse.ts";
 import { checkCmd } from "@utils/index.ts";
-import { generateSecret, runCreate } from "@src/common/index.ts";
+import { commands } from "@utils/commands.ts";
 
 async function main(inputArgs: string[]) {
   const args = parseArguments(inputArgs);
@@ -10,14 +10,11 @@ async function main(inputArgs: string[]) {
     await printHelp();
   }
 
-  const create = checkCmd(cmds, "create");
-  if (create) {
-    await runCreate(args);
-  }
-
-  const secret = checkCmd(cmds, "secret");
-  if (secret) {
-    await generateSecret(args);
+  for(const {name, call} of commands) {
+      const cmd = checkCmd(cmds, name);
+      if (cmd) {
+        await call(args);
+      }
   }
 
   await printHello();
