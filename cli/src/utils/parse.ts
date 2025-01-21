@@ -1,9 +1,30 @@
 import { Args, fig, parse } from "@deps";
-import { alias, commands } from "@utils/commands.ts";
+import { commands } from "@utils/commands.ts";
+import { helpMessage } from "@utils/common/help.ts";
 
 export function parseArguments(args: string[]): Args {
-  const booleanArgs = ["help"];
-  const stringArgs = ["length", ...commands.map((c) => (c.name))];
+  const boolArgs = commands.filter((c) => c.alias === true );
+  const strArgs = commands.filter((c) => !c.alias).map((c) => (c.name));
+
+  const booleanArgs = [
+    "help",
+    ...boolArgs.map((
+      c,
+    ) => (c.name)),
+  ];
+  const stringArgs = ["length", ...strArgs];
+  // deno-lint-ignore no-explicit-any
+  const alias: any = {
+    help: "h",
+    length: "l",
+  };
+
+  for (const arg of boolArgs) {
+    if (arg.aliasValue && arg.aliasValue.length > 1) {
+      throw new Error("aliasValue should be a single char");
+    }
+    alias[arg.name] = arg.aliasValue || arg.name.charAt(0).toLowerCase();
+  }
 
   return parse(args, {
     alias,
@@ -17,26 +38,7 @@ export function parseArguments(args: string[]): Args {
 
 export async function printHelp() {
   await printHello();
-  console.log(
-    `
-    \nUsage: Below are available commands
-    \n
-    ---------------------------------------------------------
-      create          <=>    Generate new project scaffold
-    ---------------------------------------------------------
-      secret          <=>    Generate random secret token
-    ---------------------------------------------------------
-
-
-    \nOptional flags:
-    ---------------------------------------------------------
-      -h, --help         <=>    Display help and exit
-    ---------------------------------------------------------
-      -l, --length       <=>    State secret length
-    ---------------------------------------------------------
-  `.trim(),
-  );
-
+  console.log(helpMessage);
   Deno.exit(0);
 }
 

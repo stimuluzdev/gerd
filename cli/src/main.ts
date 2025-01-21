@@ -4,16 +4,13 @@ import { commands } from "@utils/commands.ts";
 
 async function main(inputArgs: string[]) {
   const args = parseArguments(inputArgs);
-  const cmds = args._;
-
-  console.log({ args, cmds });
-
+console.log(args)
   if (args.help) {
     await printHelp();
   }
 
   for (const { name, call } of commands) {
-    const cmd = checkCmd(cmds, name);
+    const cmd = checkCmd(args, name);
     if (cmd) {
       await call(args);
     }

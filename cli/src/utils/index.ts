@@ -11,8 +11,19 @@ export const command = async (cmd: string, args: string[]) => {
   return "";
 };
 
-export const checkCmd = (cmds: (string | number)[], cmd: string) => {
-  const find = cmds.find((c) => c === cmd);
+export const checkCmd = (args: {
+  // deno-lint-ignore no-explicit-any
+  [x: string]: any;
+  _: Array<string | number>;
+}, cmd: string) => {
+  const find = args._.find((c) => c === cmd);
+  const alias = Object.keys(args).find((k) => k === cmd);
+  if (alias !== undefined) {
+    const val = args[alias];
+    if (val === true || val.length > 0) {
+      return true;
+    }
+  }
   return find !== undefined;
 };
 
