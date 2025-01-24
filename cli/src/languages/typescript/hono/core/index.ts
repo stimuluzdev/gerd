@@ -3,8 +3,7 @@ import { type ArgsType } from "@utils/commands.ts";
 
 export const scaffold = async (args: ArgsType, cmd: string) => {
   const [, input] = getCommandValue(args, cmd);
-  const name = input ||
-    prompt("Enter project name: \n> ") as string;
+  const name = input || (prompt("Enter project name: \n> ") as string);
   const opts = { old: "./hono-scafold", newPath: `./${name}` };
 
   await command("git", [
