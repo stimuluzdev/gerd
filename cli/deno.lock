@@ -162,10 +162,5 @@
     "https://dzjd3wnuerwiybhjc6w4aqtpnm46ble4dcfbb6jn7w3upjcmpraa.arweave.net/HlI92bQkbIwE6RetwEJvazngrJwYihD5Lf23R6RMfEA/deps/serializer.js": "5d279822da6e68c226e65196ea8771a7ba46fae8b43588b84de9019a277d3f63",
     "https://dzjd3wnuerwiybhjc6w4aqtpnm46ble4dcfbb6jn7w3upjcmpraa.arweave.net/HlI92bQkbIwE6RetwEJvazngrJwYihD5Lf23R6RMfEA/dist/fonts/_standard.js": "461059262d784fd0e8de9fca24cf910dedb8f7992f47c79e39b86859e36a121d",
     "https://dzjd3wnuerwiybhjc6w4aqtpnm46ble4dcfbb6jn7w3upjcmpraa.arweave.net/HlI92bQkbIwE6RetwEJvazngrJwYihD5Lf23R6RMfEA/mod.js": "cc22b89d66ad29ae38df794291a8b26a21b1fecaf7bebe55e590973f55bca6d3"
-  },
-  "workspace": {
-    "dependencies": [
-      "jsr:@std/assert@1"
-    ]
   }
 }
