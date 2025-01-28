@@ -4,7 +4,7 @@
     "up:gerd": "deno uninstall -g gerd && deno install -A --import-map=./import_map.json -g --name gerd src/main.ts",
     "un:gerd": "deno uninstall -g gerd",
     "i:gerd": "deno install -A --import-map=./import_map.json -g --name gerd src/main.ts",
-    "release": "deno compile --output gerd --include src --import-map=./import_map.json -A src/main.ts",
+    "release": "deno compile --output gerd --target aarch64-apple-darwin --include src/languages --include src/utils --import-map=./import_map.json -A src/main.ts",
     "test": "deno test",
     "new": "deno run -A scripts/new.ts"
   }
