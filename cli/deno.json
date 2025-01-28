@@ -1,7 +1,8 @@
 {
   "tasks": {
     "dev": "deno run -A src/main.ts",
-    "test": "deno test"
+    "test": "deno test",
+    "new": "deno run -A scripts/new.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
