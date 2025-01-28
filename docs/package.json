@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "pnpm c:docs && next build",
+    "docs:dev": "pnpm c:docs && next dev",
     "dev": "next dev",
     "start": "next start",
+    "c:docs": "bun ./scripts/copy-docs.ts",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
