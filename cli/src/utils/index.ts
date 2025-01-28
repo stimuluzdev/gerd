@@ -39,7 +39,7 @@ export const getCommandValue = (args: ArgsType, cmd: string) => {
 
 export const renameFolder = async (
   name: string,
-  info: { old: string; newPath: string },
+  info: { old: string; newPath: string }
 ) => {
   const { old, newPath } = info;
   await Deno.rename(old, newPath);
@@ -47,10 +47,13 @@ export const renameFolder = async (
   await rewriteFile(path, { old: "hono-scaffold", write: name });
 };
 
-export const rewriteFile = async (path: string, content: {
-  old: string;
-  write: string;
-}) => {
+export const rewriteFile = async (
+  path: string,
+  content: {
+    old: string;
+    write: string;
+  }
+) => {
   const text = await readFile(path);
   const data = text.replace(content.old, content.write);
   await Deno.remove(path);
@@ -131,14 +134,13 @@ export const registerCommands = async (commands: Command[], args: ArgsType) => {
 export const getSubCommands = async (frameworks: FrameworkWithLang[]) => {
   const subCommands: { framework: string; subCommands: Command[] }[] = [];
   for (const f of frameworks) {
-    const SubCommands = await import(
+    const SubCommands = (await import(
       `@src/languages/${f.lang}/${f.framework}/index.ts`
-    ).then(
-      (m) => m.SubCalls,
-    ) as Command[];
+    ).then((m) => m.SubCore)) as Command[];
     subCommands.push({ framework: f.framework, subCommands: SubCommands });
   }
   return subCommands;
 };
 
-export const getAliasValue = (alias: Command) => alias.aliasValue || alias.name.charAt(0).toLowerCase()
+export const getAliasValue = (alias: Command) =>
+  alias.aliasValue || alias.name.charAt(0).toLowerCase();

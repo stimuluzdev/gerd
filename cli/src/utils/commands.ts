@@ -8,6 +8,10 @@ export type ArgsType = {
 };
 export type FunctionType = (args: ArgsType, cmd: string) => Promise<void>;
 
+export interface CoreType {
+  create: FunctionType;
+}
+
 export interface Command {
   name: string;
   call: FunctionType;
@@ -26,12 +30,17 @@ interface FrameworkCommand {
 */
 
 export const commands: Command[] = [
-  { name: "create", call: runCreate, alias: true, desc: "Generate new project scaffold" },
+  {
+    name: "create",
+    call: runCreate,
+    alias: true,
+    desc: "Generate new project scaffold",
+  },
   { name: "secret", call: generateSecret, desc: "Generate random secret keys" },
 ];
 
 const allFrameworks = await getAllFrameworksWithLang();
 const subCommands = await getSubCommands(allFrameworks);
 export const frameworks: FrameworkCommand[] = subCommands.map((f) => {
-  return ({ framework: f.framework, subCommands: f.subCommands });
+  return { framework: f.framework, subCommands: f.subCommands };
 });

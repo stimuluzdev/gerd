@@ -5,13 +5,16 @@ import {
   getSubfolders,
 } from "@utils/index.ts";
 import { Prompt } from "@deps";
-import { type FunctionType } from "@utils/commands.ts";
+import type { CoreType } from "@utils/commands.ts";
 
-export const generateSecret = async (args: {
-  // deno-lint-ignore no-explicit-any
-  [x: string]: any;
-  _: Array<string | number>;
-}, _cmd: string) => {
+export const generateSecret = async (
+  args: {
+    // deno-lint-ignore no-explicit-any
+    [x: string]: any;
+    _: Array<string | number>;
+  },
+  _cmd: string
+) => {
   const num = args["length"] || args["l"];
   const output = await command("openssl", ["version", "-d"]);
   if (output.includes("OPENSSLDIR")) {
@@ -21,11 +24,14 @@ export const generateSecret = async (args: {
   Deno.exit(0);
 };
 
-export const runCreate = async (args: {
-  // deno-lint-ignore no-explicit-any
-  [x: string]: any;
-  _: Array<string | number>;
-}, cmd: string) => {
+export const runCreate = async (
+  args: {
+    // deno-lint-ignore no-explicit-any
+    [x: string]: any;
+    _: Array<string | number>;
+  },
+  cmd: string
+) => {
   const value = getCommandValue(args, cmd);
   const languages = await getSubfolders("./src/languages");
   let language = null;
@@ -66,10 +72,9 @@ export const runCreate = async (args: {
     });
   }
 
-  const Call = await import(
+  const Core = (await import(
     `@src/languages/${language}/${framework}/index.ts`
-  ).then(
-    (m) => m.Call,
-  ) as { create: FunctionType };
-  await Call.create(args, cmd);
+  ).then((m) => m.Core)) as CoreType;
+
+  await Core.create(args, cmd);
 };
