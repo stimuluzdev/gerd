@@ -8,6 +8,8 @@ This is a docs application generated with
 Run development server:
 
 ```bash
+cd docs
+pnpm install
 pnpm dev
 ```
 
