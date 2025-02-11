@@ -1,7 +1,11 @@
-import { command, getCommandValue, renameFolder } from "@utils/index.ts";
-import { type ArgsType } from "@utils/commands.ts";
+import {
+  command,
+  createCommand,
+  getCommandValue,
+  renameFolder,
+} from "@utils/index.ts";
 
-export const scaffold = async (args: ArgsType, cmd: string) => {
+export const scaffold = createCommand(async (args, cmd) => {
   const [, input] = getCommandValue(args, cmd);
   const name = input || (prompt("Enter project name: \n> ") as string);
   const opts = { old: "./hono-scafold", newPath: `./${name}` };
@@ -12,4 +16,4 @@ export const scaffold = async (args: ArgsType, cmd: string) => {
   ]);
   await renameFolder(name, opts);
   Deno.exit(0);
-};
+});

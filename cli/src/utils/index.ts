@@ -13,6 +13,12 @@ export const command = async (cmd: string, args: string[]) => {
   return "";
 };
 
+export const createCommand = (
+  cmd: (args: ArgsType, cmd: string) => Promise<void>
+) => {
+  return cmd;
+};
+
 export const checkCmd = (args: ArgsType, cmd: string) => {
   const find = args._?.find((c) => c === cmd);
   const alias = Object.keys(args).find((k) => k === cmd);
