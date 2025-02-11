@@ -52,17 +52,12 @@ await Deno.mkdir(`${path}/sub-core`);
 await writeFile(
   `${path}/core/index.ts`,
   `
-import {
-  command,
-  createCommand,
-  getCommandValue,
-  renameFolder,
-} from "@utils/index.ts";
+import { command, createCommand, getCommandValue } from "@utils/index.ts";
 
 export const scaffold = createCommand(async (args, cmd) => {
   const values = getCommandValue(args, cmd);
-  console.log({values, args});
-
+  console.log({ values, args });
+  await command("", []);
   Deno.exit(0);
 });
 `.trim()
