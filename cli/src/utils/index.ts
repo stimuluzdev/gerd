@@ -4,11 +4,15 @@ import type { ArgsType, Command } from "@utils/commands.ts";
 export type FrameworkWithLang = { lang: string; framework: string };
 export const command = async (cmd: string, args: string[]) => {
   const td = new TextDecoder();
-  const { success, stdout } = await new Deno.Command(cmd, {
+  const { success, stdout, stderr } = await new Deno.Command(cmd, {
     args,
   }).output();
   if (success) {
     return td.decode(stdout).trim();
+  } else {
+    if (Deno.env.get("ENV") === "dev") {
+      console.log(td.decode(stderr).trim());
+    }
   }
   return "";
 };
