@@ -4,7 +4,12 @@
     "up:gerd": "deno uninstall -g gerd && deno install -A -g --name gerd src/main.ts",
     "un:gerd": "deno uninstall -g gerd",
     "i:gerd": "deno install -A -g --name gerd src/main.ts",
-    "release": "deno compile --output gerd --target aarch64-apple-darwin --include . -A src/main.ts",
+    "r:win": "deno compile --output gerd --target x86_64-pc-windows-msvc --include . -A src/main.ts",
+    "r:macOld": "deno compile --output gerd --target x86_64-apple-darwin --include . -A src/main.ts",
+    "r:macNew": "deno compile --output gerd --target aarch64-apple-darwin --include . -A src/main.ts",
+    "r:linuxOld": "deno compile --output gerd --target x86_64-unknown-linux-gnu --include . -A src/main.ts",
+    "r:linuxNew": "deno compile --output gerd --target aarch64-unknown-linux-gnu --include . -A src/main.ts",
+    "release": "deno task r:win && deno task r:macOld && deno task r:macNew && deno task r:linuxOld && deno task r:linuxNew",
     "test": "deno test",
     "new": "deno run -A scripts/new.ts"
   },
