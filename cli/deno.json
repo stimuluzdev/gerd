@@ -4,7 +4,7 @@
     "up:gerd": "deno uninstall -g gerd && deno install -A -g --name gerd src/main.ts",
     "un:gerd": "deno uninstall -g gerd",
     "i:gerd": "deno install -A -g --name gerd src/main.ts",
-    "release": "deno compile --output gerd --target aarch64-apple-darwin --include ./ -A src/main.ts",
+    "release": "deno compile --output gerd --target aarch64-apple-darwin --include . -A src/main.ts",
     "test": "deno test",
     "new": "deno run -A scripts/new.ts"
   },
