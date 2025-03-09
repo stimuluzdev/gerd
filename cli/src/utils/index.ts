@@ -104,7 +104,9 @@ export const capFirstChar = (str: string) => {
 
 export async function getSubfolders(folderPath: string): Promise<string[]> {
   const subfolders: string[] = [];
-  for await (const entry of Deno.readDir(folderPath)) {
+  for await (const entry of Deno.readDir(
+    Path.join(import.meta.dirname!, folderPath)
+  )) {
     if (entry.isDirectory) {
       subfolders.push(entry.name);
     }
@@ -114,9 +116,9 @@ export async function getSubfolders(folderPath: string): Promise<string[]> {
 
 export const getAllFrameworks = async () => {
   const frameworks: string[] = [];
-  const languages = await getSubfolders("./src/languages");
+  const languages = await getSubfolders("../languages");
   for (const lang of languages) {
-    const names = await getSubfolders(`./src/languages/${lang}`);
+    const names = await getSubfolders(`../languages/${lang}`);
     frameworks.push(...names);
   }
   return frameworks;
@@ -124,9 +126,9 @@ export const getAllFrameworks = async () => {
 
 export const getAllFrameworksWithLang = async () => {
   const frameworks: FrameworkWithLang[] = [];
-  const languages = await getSubfolders("./src/languages");
+  const languages = await getSubfolders("../languages");
   for (const lang of languages) {
-    const names = await getSubfolders(`./src/languages/${lang}`);
+    const names = await getSubfolders(`../languages/${lang}`);
     frameworks.push(...names.map((n) => ({ lang, framework: n })));
   }
   return frameworks;

@@ -33,14 +33,14 @@ export const runCreate = async (
   cmd: string
 ) => {
   const value = getCommandValue(args, cmd);
-  const languages = await getSubfolders("./src/languages");
+  const languages = await getSubfolders("../languages");
   let language = null;
   let framework = null;
   if (value.length > 0) {
     const [name] = value;
 
     for (const lang of languages) {
-      const frameworks = await getSubfolders(`./src/languages/${lang}`);
+      const frameworks = await getSubfolders(`../languages/${lang}`);
       const frame = frameworks.find((f) => f === name.toLowerCase());
       if (frame !== undefined) {
         language = lang;
@@ -61,7 +61,7 @@ export const runCreate = async (
       })),
       search: true,
     });
-    const frameworks = await getSubfolders(`./src/languages/${language}`);
+    const frameworks = await getSubfolders(`../languages/${language}`);
     framework = await Prompt.Select.prompt({
       message: "Select framework:",
       options: frameworks.map((name) => ({
