@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 $ErrorActionPreference = "Stop"
 
-$Repo = "stimuluz/gerd"
+$Repo = "stimuluzdev/gerd"
 $RepoUrl = "https://github.com/$Repo.git"
 $InstallName = "gerd"
 
@@ -48,6 +48,12 @@ try {
     
     Write-Host "🔧 Installing gerd..."
     Push-Location (Join-Path $TempDir "cli")
+    
+    # Install dependencies
+    Write-Host "📦 Fetching dependencies..."
+    deno cache deps.ts
+    
+    # Install the CLI globally
     deno install -A -f -g --name $InstallName --import-map import_map.json src/main.ts
     Pop-Location
     

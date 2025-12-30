@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO="stimuluz/gerd"
+REPO="stimuluzdev/gerd"
 REPO_URL="https://github.com/${REPO}.git"
 INSTALL_NAME="gerd"
 
@@ -33,6 +33,12 @@ git clone --depth 1 "$REPO_URL" "$TEMP_DIR" 2>/dev/null || {
 
 echo "🔧 Installing gerd..."
 cd "$TEMP_DIR/cli"
+
+# Install dependencies
+echo "📦 Fetching dependencies..."
+deno cache deps.ts
+
+# Install the CLI globally
 deno install -A -f -g --name "$INSTALL_NAME" --import-map import_map.json src/main.ts
 
 echo ""
