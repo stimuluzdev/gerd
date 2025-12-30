@@ -13,6 +13,9 @@ export const scaffold = createCommand(async (args, cmd) => {
   await command("git", [
     "clone",
     "https://github.com/uriah-dev/hono-scafold.git",
-  ]);
+  ])
+  .catch((e) => console.log(e))
+  .finally(() => console.log("Scaffold cloned successfully"));
+  
   await renameFolder(name, opts);
 });
