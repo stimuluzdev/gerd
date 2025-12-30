@@ -60,7 +60,7 @@ export const scaffold = createCommand(async (args, cmd) => {
   await command("", []);
   Deno.exit(0);
 });
-`.trim()
+`.trim(),
 );
 
 await writeFile(
@@ -72,14 +72,14 @@ description: Docs on how ${framework} commands work
 ---
 
 Additional docs goes here!
-`.trim()
+`.trim(),
 );
 
 await writeFile(
   `${path}/sub-core/index.ts`,
   `
 // Write additional function here and import into the SubCore in ../index.ts
-`.trim()
+`.trim(),
 );
 
 await writeFile(
@@ -98,5 +98,5 @@ const SubCore: Command[] = [
 ];
 
 export { Core, SubCore };
-`.trim()
+`.trim(),
 );

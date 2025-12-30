@@ -11,13 +11,16 @@ export const scaffold = createCommand(async (args, cmd) => {
   const name = input || (prompt("Enter project name: \n> ") as string);
   const opts = { old: "./hono-scafold", newPath: `./${name}` };
 
-  await command("git", [
+  const { success, error } = await command("git", [
     "clone",
     "https://github.com/uriah-dev/hono-scafold.git",
-  ])
-  .catch((e) => console.log(e))
-  .finally(() => console.log("Scaffold cloned successfully"));
-  
+  ]);
+  if (!success) {
+    console.log(error);
+    return;
+  }
+  console.log("Scaffold cloned successfully");
+
   await renameFolder(name, opts);
   await removeGitDir(opts.newPath);
 });

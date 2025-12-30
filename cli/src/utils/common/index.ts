@@ -5,33 +5,24 @@ import {
   getSubfolders,
 } from "@utils/index.ts";
 import { Prompt } from "@deps";
-import type { CoreType } from "@utils/commands.ts";
+import type { ArgsType, CoreType } from "@utils/commands.ts";
 
-export const generateSecret = async (
-  args: {
-    // deno-lint-ignore no-explicit-any
-    [x: string]: any;
-    _: Array<string | number>;
-  },
-  _cmd: string
-) => {
+export const generateSecret = async (args: ArgsType, _cmd: string) => {
   const num = args["length"] || args["l"];
-  const output = await command("openssl", ["version", "-d"]);
-  if (output.includes("OPENSSLDIR")) {
-    const output = await command("openssl", ["rand", "-base64", num]);
-    console.log(output);
+  const result = await command("openssl", ["version", "-d"]);
+  if (result.success && result.output.includes("OPENSSLDIR")) {
+    const { success, output } = await command("openssl", [
+      "rand",
+      "-base64",
+      num,
+    ]);
+    if (success) {
+      console.log(output);
+    }
   }
-  Deno.exit(0);
 };
 
-export const runCreate = async (
-  args: {
-    // deno-lint-ignore no-explicit-any
-    [x: string]: any;
-    _: Array<string | number>;
-  },
-  cmd: string
-) => {
+export const runCreate = async (args: ArgsType, cmd: string) => {
   const value = getCommandValue(args, cmd);
   const languages = await getSubfolders("../languages");
   let language = null;
@@ -50,7 +41,7 @@ export const runCreate = async (
     }
     if (!language || !framework) {
       console.log("Please enter valid framework name!");
-      Deno.exit(0);
+      return;
     }
   } else {
     language = await Prompt.Select.prompt({

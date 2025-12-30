@@ -2,23 +2,35 @@ import { Path, readline } from "@deps";
 import type { ArgsType, Command } from "@utils/commands.ts";
 
 export type FrameworkWithLang = { lang: string; framework: string };
-export const command = async (cmd: string, args: string[]) => {
+
+export type CommandResult = {
+  success: boolean;
+  output: string;
+  error?: string;
+};
+
+export const command = async (
+  cmd: string,
+  args: string[],
+): Promise<CommandResult> => {
   const td = new TextDecoder();
   const { success, stdout, stderr } = await new Deno.Command(cmd, {
     args,
   }).output();
+
   if (success) {
-    return td.decode(stdout).trim();
-  } else {
-    if (Deno.env.get("ENV") === "dev") {
-      console.log(td.decode(stderr).trim());
-    }
+    return { success: true, output: td.decode(stdout).trim() };
   }
-  return "";
+
+  const error = td.decode(stderr).trim();
+  if (Deno.env.get("ENV") === "dev") {
+    console.log(error);
+  }
+  return { success: false, output: "", error };
 };
 
 export const createCommand = (
-  cmd: (args: ArgsType, cmd: string) => Promise<void>
+  cmd: (args: ArgsType, cmd: string) => Promise<void>,
 ) => {
   return cmd;
 };
@@ -49,7 +61,7 @@ export const getCommandValue = (args: ArgsType, cmd: string) => {
 
 export const renameFolder = async (
   name: string,
-  info: { old: string; newPath: string }
+  info: { old: string; newPath: string },
 ) => {
   const { old, newPath } = info;
   await Deno.rename(old, newPath);
@@ -76,11 +88,10 @@ export const rewriteFile = async (
   content: {
     old: string;
     write: string;
-  }
+  },
 ) => {
   const text = await readFile(path);
   const data = text.replace(content.old, content.write);
-  await Deno.remove(path);
   await writeFile(path, data);
 };
 
@@ -101,12 +112,11 @@ export const getRootName = (newPath = "") => {
 export const readFileAsArray = async (path: string) => {
   const file = await Deno.open(path);
   const lines: string[] = [];
-  console.log({ read: readline(file) });
   for await (const line of readline(file)) {
-    console.log(new TextDecoder().decode(line));
+    lines.push(new TextDecoder().decode(line));
   }
   file.close();
-  return { lines };
+  return lines;
 };
 
 export const capFirstChar = (str: string) => {
@@ -118,9 +128,11 @@ export const capFirstChar = (str: string) => {
 
 export async function getSubfolders(folderPath: string): Promise<string[]> {
   const subfolders: string[] = [];
-  for await (const entry of Deno.readDir(
-    Path.join(import.meta.dirname!, folderPath)
-  )) {
+  for await (
+    const entry of Deno.readDir(
+      Path.join(import.meta.dirname!, folderPath),
+    )
+  ) {
     if (entry.isDirectory) {
       subfolders.push(entry.name);
     }
