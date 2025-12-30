@@ -57,6 +57,20 @@ export const renameFolder = async (
   await rewriteFile(path, { old: "hono-scaffold", write: name });
 };
 
+export const removePath = async (path: string, silent = true) => {
+  try {
+    await Deno.remove(path, { recursive: true });
+  } catch (error) {
+    if (!(error instanceof Deno.errors.NotFound) && !silent) {
+      console.error(`Failed to remove ${path}:`, error);
+    }
+  }
+};
+
+export const removeGitDir = async (basePath: string) => {
+  await removePath(`${basePath}/.git`);
+};
+
 export const rewriteFile = async (
   path: string,
   content: {

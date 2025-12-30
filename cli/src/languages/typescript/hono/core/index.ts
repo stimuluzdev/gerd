@@ -2,6 +2,7 @@ import {
   command,
   createCommand,
   getCommandValue,
+  removeGitDir,
   renameFolder,
 } from "@utils/index.ts";
 
@@ -18,4 +19,5 @@ export const scaffold = createCommand(async (args, cmd) => {
   .finally(() => console.log("Scaffold cloned successfully"));
   
   await renameFolder(name, opts);
+  await removeGitDir(opts.newPath);
 });
