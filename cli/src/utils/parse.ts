@@ -1,7 +1,8 @@
-import { Args, fig, parse } from "@deps";
+import { type Args, fig, parse } from "@deps";
 import { commands } from "@utils/commands.ts";
 import { helpMessage } from "@utils/common/help.ts";
 import { getAliasValue, getAllFrameworks } from "@utils/index.ts";
+import config from "../../deno.json" with { type: "json" };
 
 export async function parseArguments(args: string[]): Promise<Args> {
   const frameworks = await getAllFrameworks();
@@ -10,6 +11,7 @@ export async function parseArguments(args: string[]): Promise<Args> {
 
   const booleanArgs = [
     "help",
+    "version",
     ...boolArgs.map((
       c,
     ) => (c.name)),
@@ -18,6 +20,7 @@ export async function parseArguments(args: string[]): Promise<Args> {
   // deno-lint-ignore no-explicit-any
   const alias: any = {
     help: "h",
+    version: "v",
     length: "l",
   };
 
@@ -41,7 +44,12 @@ export async function parseArguments(args: string[]): Promise<Args> {
 export async function printHelp() {
   await printHello();
   console.log(helpMessage);
-  Deno.exit(0);
+  Deno.exit();
+}
+
+export function printVersion() {
+  console.log(`gerd v${config.version}`);
+  Deno.exit();
 }
 
 export async function printHello() {

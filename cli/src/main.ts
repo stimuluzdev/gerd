@@ -1,4 +1,4 @@
-import { parseArguments, printHello, printHelp } from "@utils/parse.ts";
+import { parseArguments, printHello, printHelp, printVersion } from "@utils/parse.ts";
 import { checkCmd, registerCommands } from "@utils/index.ts";
 import { commands, frameworks } from "@utils/commands.ts";
 
@@ -6,6 +6,9 @@ async function main(inputArgs: string[]) {
   const args = await parseArguments(inputArgs);
   if (args.help) {
     await printHelp();
+  }
+  if (args.version) {
+    printVersion();
   }
 
   await registerCommands(commands, args);

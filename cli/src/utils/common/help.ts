@@ -20,11 +20,13 @@ export const helpMessage = `
     ---------------------------------------------------------
     -h, --help    <=>  Display help and exit
     ---------------------------------------------------------
+    -v, --version <=>  Display version and exit
+    ---------------------------------------------------------
     -l, --length  <=>  State secret length
     ---------------------------------------------------------
     ${
   alias.map((a) => `
-      -${getAliasValue(a)}, --create  <=>  Alias to ${a.name}
+      -${getAliasValue(a)}, --${a.name}  <=>  Alias to ${a.name}
     ---------------------------------------------------------`).join("").trim()
 }
 

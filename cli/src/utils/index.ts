@@ -66,7 +66,8 @@ export const renameFolder = async (
   const { old, newPath } = info;
   await Deno.rename(old, newPath);
   const path = `${newPath}/package.json`;
-  await rewriteFile(path, { old: "hono-scaffold", write: name });
+  const oldName = old.replace(/^\.\//, "");
+  await rewriteFile(path, { old: oldName, write: name });
 };
 
 export const removePath = async (path: string, silent = true) => {
