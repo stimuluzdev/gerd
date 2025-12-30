@@ -18,6 +18,4 @@ export const scaffold = createCommand(async (args, cmd) => {
     "-y",
   ]);
   console.log(output);
-
-  Deno.exit(0);
 });

@@ -15,5 +15,4 @@ export const scaffold = createCommand(async (args, cmd) => {
     "https://github.com/uriah-dev/hono-scafold.git",
   ]);
   await renameFolder(name, opts);
-  Deno.exit(0);
 });

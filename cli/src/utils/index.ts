@@ -138,7 +138,7 @@ export const registerCommands = async (commands: Command[], args: ArgsType) => {
   for (const { name, call } of commands) {
     const cmd = checkCmd(args, name);
     if (cmd) {
-      await call(args, name);
+      await call(args, name).finally(() => Deno.exit());
     }
   }
 };
