@@ -27,6 +27,20 @@ deno task up:gerd
 
 To remove: `deno task un:gerd`
 
+### Uninstall
+
+**macOS / Linux:**
+
+```bash
+rm ~/.local/bin/gerd
+```
+
+**Windows (PowerShell):**
+
+```powershell
+Remove-Item "$env:LOCALAPPDATA\gerd\gerd.exe"
+```
+
 ---
 
 ## Command Line Interface [CLI]
