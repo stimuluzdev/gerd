@@ -1,0 +1,46 @@
+---
+title: CLI Flow
+description: Documentation of the CLI execution flow and architecture.
+---
+
+# CLI Flow Documentation
+
+This document describes the command execution flow for the `@stimuluz/gerd` CLI tool located in `tools/gerd/cli`.
+
+## 1. Entry Point
+*   **File:** [`src/main.ts`](file:///Users/uriah/Job/Stimuluz/tools/gerd/cli/src/main.ts)
+*   **Deno Task:** `deno task gerd` (runs `deno run -A src/main.ts`)
+*   **Execution:**
+    1.  Parses CLI arguments.
+    2.  Checks for `--help`.
+    3.  Registers **Global Commands**.
+    4.  Iterates through **Frameworks** to register **Framework-specific Commands**.
+
+## 2. Global Commands
+Global commands are defined in [`src/utils/commands.ts`](file:///Users/uriah/Job/Stimuluz/tools/gerd/cli/src/utils/commands.ts).
+Current global commands:
+*   `create`: Scaffolds a new project (alias for `runCreate` in `utils/common/index.ts`).
+*   `secret`: Generates random secret keys.
+
+## 3. Framework & Subcommand Discovery
+The CLI dynamically discovers supported languages and frameworks by determining the directory structure of [`src/languages`](file:///Users/uriah/Job/Stimuluz/tools/gerd/cli/src/languages).
+
+*   **Languages:** Folders in `src/languages` (e.g., `typescript`, `elixir`).
+*   **Frameworks:** Subfolders in each language folder (e.g., `typescript/hono`, `typescript/next`, `typescript/react`).
+
+### Registration Logic
+1.  The CLI scans `src/languages` to build a list of available frameworks.
+2.  In `main.ts`, it checks if the user arguments contain a **Framework Name** (e.g., `gerd hono ...`).
+3.  If a framework name is detected, it dynamically imports the framework's module:
+    *   Path: `src/languages/<lang>/<framework>/index.ts`
+    *   Export: `SubCore` (Array of `Command`)
+4.  These subcommands are then registered and executed if they match the user's input.
+
+### Example: `hono`
+*   **Definition:** [`src/languages/typescript/hono/index.ts`](file:///Users/uriah/Job/Stimuluz/tools/gerd/cli/src/languages/typescript/hono/index.ts)
+*   **Commands:** Exports a `create` command (Mapped to `scaffold` in `core/index.ts`).
+*   **Usage:** `gerd hono create` (activates `hono` framework -> registers `create` -> executes `scaffold`).
+
+## 4. Summary of Architecture
+*   **Dynamic Loading:** Frameworks are not hardcoded in `main.ts` but discovered at runtime.
+*   **Contextual Commands:** Framework-specific commands are only relevant (and registered) if the framework name is part of the command arguments.

@@ -20,6 +20,8 @@ To remove global installation run `deno task un:gerd`
 
 To make your local changes reflect in the global installation run `deno task up:gerd`
 
+[CLI Flow Documentation](docs/content/docs/cli-flow.mdx)
+
 ## Documentation
 
 This is a docs application generated with

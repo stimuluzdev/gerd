@@ -1,4 +1,10 @@
 {
+  "name": "@stimuluz/gerd",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    "./gerd": "./src/main.ts"
+  },
   "tasks": {
     "gerd": "deno run -A src/main.ts",
     "up:gerd": "deno uninstall -g gerd && deno install -A -g --name gerd src/main.ts",
