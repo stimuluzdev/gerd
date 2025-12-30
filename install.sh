@@ -4,6 +4,7 @@ set -e
 REPO="stimuluzdev/gerd"
 REPO_URL="https://github.com/${REPO}.git"
 INSTALL_NAME="gerd"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/.local/bin}"
 
 echo "📦 Installing gerd CLI..."
 echo ""
@@ -31,17 +32,28 @@ git clone --depth 1 "$REPO_URL" "$TEMP_DIR" 2>/dev/null || {
   curl -sL "https://github.com/${REPO}/archive/refs/heads/main.tar.gz" | tar -xz -C "$TEMP_DIR" --strip-components=1
 }
 
-echo "🔧 Installing gerd..."
+echo "🔧 Compiling gerd..."
 cd "$TEMP_DIR/cli"
 
-# Install dependencies
-echo "📦 Fetching dependencies..."
+# Cache dependencies
 deno cache deps.ts
 
-# Install the CLI globally
-deno install -A -f -g --name "$INSTALL_NAME" --import-map import_map.json src/main.ts
+# Compile to binary (includes import map at compile time)
+mkdir -p "$INSTALL_DIR"
+deno compile --output "${INSTALL_DIR}/${INSTALL_NAME}" --include . --no-check -A src/main.ts
 
 echo ""
 echo "✅ gerd installed successfully!"
 echo ""
-echo "Run 'gerd --help' to get started."
+echo "Installed to: ${INSTALL_DIR}/${INSTALL_NAME}"
+echo ""
+
+# Check if INSTALL_DIR is in PATH
+if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+  echo "⚠️  Add ${INSTALL_DIR} to your PATH:"
+  echo "   export PATH=\"\$PATH:${INSTALL_DIR}\""
+  echo ""
+  echo "Add this line to ~/.bashrc or ~/.zshrc to make it permanent."
+else
+  echo "Run 'gerd --help' to get started."
+fi

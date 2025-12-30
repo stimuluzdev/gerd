@@ -1,4 +1,4 @@
-import { type Args, fig, parse } from "@deps";
+import { type Args, parse } from "@deps";
 import { commands } from "@utils/commands.ts";
 import { helpMessage } from "@utils/common/help.ts";
 import { getAliasValue, getAllFrameworks } from "@utils/index.ts";
@@ -52,10 +52,17 @@ export function printVersion() {
   Deno.exit();
 }
 
-export async function printHello() {
-  const word = await fig("GERD!");
+export function printHello() {
+  const asciiArt = `
+   ____   _____   ____    ____    _ 
+  / ___| | ____| |  _ \\  |  _ \\  | |
+ | |  _  |  _|   | |_) | | | | | | |
+ | |_| | | |___  |  _ <  | |_| | |_|
+  \\____| |_____| |_| \\_\\ |____/  (_)
+`;
   console.log(`
-    \nWelcome to
-    \n${word}
+    \\nWelcome to
+    ${asciiArt}
   `);
 }
+
