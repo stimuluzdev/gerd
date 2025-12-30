@@ -7,19 +7,13 @@
 **macOS / Linux:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/stimuluz/gerd/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/stimuluz/gerd/install.sh | bash
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-irm https://raw.githubusercontent.com/stimuluz/gerd/main/install.ps1 | iex
-```
-
-### Direct Install (if you have Deno)
-
-```bash
-deno install -A -f -g --name gerd https://raw.githubusercontent.com/stimuluz/gerd/main/cli/src/main.ts
+irm https://raw.githubusercontent.com/stimuluz/gerd/install.ps1 | iex
 ```
 
 ### From Source (for development)
