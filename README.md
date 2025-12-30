@@ -1,24 +1,46 @@
 # GERD!
 
-## Command Line Interface [CLI]
+## Installation
 
-To test in development use the command `deno task dev` after you change directory into the
-cli directory
+### Quick Install (requires [Deno](https://deno.land))
 
-Make sure to run the command `deno install` before you proceed
-
-To install it globallly and get access to the `gerd` command in your cli, follow the steps
-below:
+**macOS / Linux:**
 
 ```bash
-cd cli
-deno install
-deno task i:gerd
+curl -fsSL https://raw.githubusercontent.com/stimuluz/gerd/main/install.sh | bash
 ```
 
-To remove global installation run `deno task un:gerd`
+**Windows (PowerShell):**
 
-To make your local changes reflect in the global installation run `deno task up:gerd`
+```powershell
+irm https://raw.githubusercontent.com/stimuluz/gerd/main/install.ps1 | iex
+```
+
+### Direct Install (if you have Deno)
+
+```bash
+deno install -A -f -g --name gerd https://raw.githubusercontent.com/stimuluz/gerd/main/cli/src/main.ts
+```
+
+### From Source (for development)
+
+```bash
+git clone https://github.com/stimuluz/gerd.git
+cd gerd/cli
+deno install
+deno task up:gerd
+```
+
+To remove: `deno task un:gerd`
+
+---
+
+## Command Line Interface [CLI]
+
+To test in development use the command `deno task dev` after you change
+directory into the cli directory
+
+Make sure to run the command `deno install` before you proceed
 
 [CLI Flow Documentation](docs/content/docs/cli-flow.mdx)
 
