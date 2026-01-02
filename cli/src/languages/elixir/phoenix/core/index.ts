@@ -5,12 +5,15 @@ import {
   displayPhoenixSummary,
   getMixVersion,
   promptPhoenixOptions,
+  promptValidElixirName,
   showElixirInstallInstructions,
 } from "../sub-core/index.ts";
 
 export const scaffold = createCommand(async (args, cmd) => {
   const values = getCommandValue(args, cmd);
-  const name = values[0] || (prompt("Enter project name: \n> ") as string);
+  const rawName = values[0] || (prompt("Enter project name: \n> ") as string);
+
+  const name = promptValidElixirName(rawName);
 
   console.log("🔍 Checking for Elixir/Mix...");
   const mixInstalled = await checkMixInstalled();

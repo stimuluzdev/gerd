@@ -11,6 +11,47 @@ export interface PhoenixOptions {
 }
 
 /**
+ * Validates if a name follows Elixir naming conventions
+ * Must start with a letter and contain only lowercase letters, numbers, and underscores
+ */
+export const isValidElixirName = (name: string): boolean => {
+  return /^[a-z][a-z0-9_]*$/.test(name);
+};
+
+/**
+ * Sanitizes a project name to follow Elixir naming conventions
+ * Converts to lowercase, replaces hyphens with underscores, removes invalid chars
+ */
+export const sanitizeElixirName = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/-/g, "_") // Replace hyphens with underscores
+    .replace(/[^a-z0-9_]/g, "") // Remove invalid characters
+    .replace(/^[^a-z]+/, ""); // Ensure starts with a letter
+};
+
+/**
+ * Prompts for a valid Elixir project name
+ */
+export const promptValidElixirName = (initialName: string): string => {
+  if (isValidElixirName(initialName)) {
+    return initialName;
+  }
+
+  const sanitized = sanitizeElixirName(initialName);
+  console.log(`\n⚠️  Elixir requires lowercase names with underscores (no hyphens).`);
+  console.log(`   "${initialName}" → "${sanitized}"`);
+
+  const useInput = prompt(`\n  Use "${sanitized}"? (Y/n): `) || "y";
+  if (useInput.toLowerCase() === "n") {
+    const customName = prompt("  Enter a valid name (lowercase, underscores): ") || sanitized;
+    return isValidElixirName(customName) ? customName : sanitized;
+  }
+
+  return sanitized;
+};
+
+/**
  * Checks if Elixir/Mix is installed
  */
 export const checkMixInstalled = async (): Promise<boolean> => {
