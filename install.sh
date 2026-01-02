@@ -43,6 +43,12 @@ mkdir -p "$INSTALL_DIR"
 deno compile --output "${INSTALL_DIR}/${INSTALL_NAME}" --include . --no-check -A src/main.ts
 
 echo ""
+echo "🧹 Cleaning up..."
+if [ -d "$TEMP_DIR" ]; then
+  rm -rf "$TEMP_DIR"
+fi
+
+echo ""
 echo "✅ gerd installed successfully!"
 echo ""
 echo "Installed to: ${INSTALL_DIR}/${INSTALL_NAME}"

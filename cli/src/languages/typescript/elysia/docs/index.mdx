@@ -3,4 +3,74 @@ title: Elysia
 description: Docs on how Elysia commands work
 ---
 
-Welcome to Elysia! We've got you covered.
+# Elysia Commands
+
+Create production-ready Elysia projects with built-in deployment options.
+
+## Create Project
+
+```bash
+gerd elysia create <project-name>
+```
+
+Clones the [elysia-kit](https://github.com/uriah-dev/elysia-kit) scaffold with:
+- **Drizzle ORM** - Type-safe database access
+- **OpenTelemetry** - Tracing, metrics, and logging
+- **React Email** - Beautiful email templates
+- **Trigger.dev** - Background job processing
+- **Arcjet** - Rate limiting protection
+
+### Deployment Selection
+
+After cloning, you'll be prompted to select which deployment methods to keep:
+
+| Option | Description |
+|--------|-------------|
+| **Vercel** | Serverless deployment, minimal setup |
+| **PM2** | VPS deployment with Nginx |
+| **Pulumi/K8s** | Full Kubernetes infrastructure with observability |
+
+Files and scripts for unselected options are automatically removed.
+
+## Cleanup Deployments
+
+Remove deployment options from an existing project:
+
+```bash
+cd my-elysia-project
+gerd elysia cleanup-deployments
+```
+
+## Quick Start
+
+```bash
+# Create new project
+gerd elysia create my-api
+
+# Navigate and install
+cd my-api
+cp .env.example .env
+bun install
+
+# Start development
+bun run dev
+```
+
+## Project Structure
+
+```
+my-api/
+├── src/
+│   ├── index.ts          # Entry point
+│   ├── env.ts            # Environment validation
+│   ├── app/
+│   │   ├── _app.ts       # Main app setup
+│   │   └── routes/       # API routes
+│   ├── lib/              # Utilities
+│   ├── db/               # Database layer
+│   ├── emails/           # Email templates
+│   └── trigger/          # Background jobs
+├── deploy/               # Deployment guides
+├── infra/                # Pulumi infrastructure (if selected)
+└── api/                  # Vercel entry point (if selected)
+```

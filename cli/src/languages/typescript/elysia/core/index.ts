@@ -29,10 +29,8 @@ export const scaffold = createCommand(async (args, cmd) => {
   await renameFolder(name, opts);
   await removeGitDir(opts.newPath);
 
-  // Prompt user for deployment options
   const excludedDeployments = promptDeploymentOptions();
 
-  // Run cleanup for unselected deployment options
   await runDeploymentCleanup(opts.newPath, excludedDeployments);
 
   console.log(`\n🎉 Project "${name}" is ready!`);
