@@ -1,0 +1,76 @@
+---
+title: Phoenix
+description: Docs on how Phoenix commands work
+---
+
+# Phoenix Commands
+
+Create Phoenix Elixir projects with API or Full UI options.
+
+## Prerequisites
+
+Requires Elixir and Phoenix to be installed:
+
+```bash
+# Install Elixir
+brew install elixir  # macOS
+sudo apt install elixir erlang  # Ubuntu
+
+# Install Phoenix
+mix archive.install hex phx_new
+```
+
+## Create Project
+
+```bash
+gerd phoenix create <project-name>
+```
+
+### Project Types
+
+| Type | Description | Flags |
+|------|-------------|-------|
+| **api** | JSON API backend | `--no-html --no-live --no-assets` |
+| **full** | Full UI with LiveView | Default behavior |
+
+### Options
+
+| Option | Choices | Default |
+|--------|---------|---------|
+| **Database** | postgres, mysql, sqlite3, mssql, none | postgres |
+| **Dashboard** | Yes/No | Yes for full, No for api |
+| **Mailer** | Yes/No | No |
+
+## Example Session
+
+```
+🔍 Checking for Elixir/Mix...
+✓ Mix found: Mix 1.17.0
+
+📦 Phoenix Project Configuration
+
+  Project types: api, full
+  Project type? (api): api
+
+  Databases: postgres, mysql, sqlite3, mssql, none
+  Database? (postgres): postgres
+  Include LiveDashboard? (y/N): n
+  Include Mailer? (y/N): n
+
+✨ Selected configuration:
+   Type:      API Only
+   Database:  postgres
+   Dashboard: No
+   Mailer:    No
+
+🚀 Creating Phoenix app...
+```
+
+## Quick Start
+
+```bash
+gerd phoenix create my_api
+cd my_api
+mix setup
+mix phx.server
+```
