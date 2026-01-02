@@ -1,6 +1,68 @@
 ---
 title: React
-description: Docs on how react commands work
+description: Docs on how React commands work
 ---
 
-Additional docs goes here!
+# React Commands
+
+Create React projects with your choice of bundler.
+
+## Create Project
+
+```bash
+gerd react create <project-name>
+```
+
+### Bundler Options
+
+| Bundler | Description |
+|---------|-------------|
+| **Vite** | Fast build tool with templates for React/TypeScript/SWC |
+| **Bun** | All-in-one runtime with built-in React support |
+
+### Vite Templates
+
+| Template | Description |
+|----------|-------------|
+| `react` | JavaScript |
+| `react-ts` | TypeScript (default) |
+| `react-swc` | JavaScript + SWC |
+| `react-swc-ts` | TypeScript + SWC |
+
+### Package Managers
+
+When using Vite: npm, pnpm, or bun
+
+## Example Session
+
+```
+📦 React Project Configuration
+
+  Bundler options: bun, vite
+  Bundler? (vite): vite
+
+  📦 Vite Options
+  Templates: react, react-ts, react-swc, react-swc-ts
+  Template? (react-ts): react-ts
+  Package managers: npm, pnpm, bun
+  Package manager? (pnpm): pnpm
+
+✨ Selected configuration:
+   Bundler:  Vite
+   Template: react-ts
+   Package:  pnpm
+
+🚀 Creating React app...
+```
+
+## Quick Start
+
+```bash
+# Create with Vite (default)
+gerd react create my-app
+
+# Follow prompts, then:
+cd my-app
+pnpm install
+pnpm dev
+```
