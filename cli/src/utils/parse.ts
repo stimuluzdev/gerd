@@ -61,7 +61,7 @@ export function printHello() {
   \\____| |_____| |_| \\_\\ |____/  (_)
 `;
   console.log(`
-    \\nWelcome to
+    \n Welcome to
     ${asciiArt}
   `);
 }
