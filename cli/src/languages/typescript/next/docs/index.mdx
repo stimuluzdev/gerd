@@ -1,6 +1,69 @@
 ---
 title: Next
-description: Docs on how next commands work
+description: Docs on how Next commands work
 ---
 
-Additional docs goes here!
+# Next.js Commands
+
+Create T3 stack Next.js projects with customizable options.
+
+## Create Project
+
+```bash
+gerd next create <project-name>
+```
+
+Scaffolds a [T3 Stack](https://create.t3.gg) project with interactive configuration.
+
+### Configuration Options
+
+You'll be prompted to select:
+
+| Option | Choices | Default |
+|--------|---------|---------|
+| **Router** | App Router, Pages Router | App Router |
+| **API** | tRPC, None | tRPC |
+| **ORM** | Drizzle, Prisma, None | Drizzle |
+| **Database** | postgres, mysql, sqlite, planetscale | postgres |
+| **Auth** | NextAuth.js, None | None |
+| **Styling** | Tailwind CSS, None | Tailwind CSS |
+
+### Example Session
+
+```
+📦 T3 Stack Configuration
+
+  Use App Router? (Y/n): y
+  Add tRPC? (Y/n): y
+
+  ORM Options: prisma, drizzle, none
+  Add ORM? (drizzle): drizzle
+
+  Database: postgres, mysql, sqlite, planetscale
+  Database provider? (postgres): postgres
+
+  Add NextAuth.js? (y/N): n
+  Add Tailwind CSS? (Y/n): y
+
+✨ Selected stack:
+   Router:   App Router
+   API:      tRPC
+   ORM:      drizzle
+   Database: postgres
+   Auth:     None
+   Styling:  Tailwind CSS
+```
+
+## Quick Start
+
+```bash
+# Create new project
+gerd next create my-app
+
+# Navigate and install
+cd my-app
+pnpm install
+
+# Start development
+pnpm dev
+```
