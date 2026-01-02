@@ -1,4 +1,4 @@
-import { removePath, rewriteFile, writeFile } from "@utils/index.ts";
+import { removePath, writeFile } from "@utils/index.ts";
 
 /**
  * Deployment configuration - files and scripts to remove for each option
